@@ -4,11 +4,15 @@ on:
   push:
     tags:
       - "v*.*.*"
+  workflow_run:
+    workflows: ["Create Tag on Commit"]
+    types:
+      - completed
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:  
+    permissions:
       contents: write
     steps:
       - name: Checkout
@@ -20,7 +24,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.23'
+          go-version: "1.23"
 
       - name: Build
         run: go build -v ./...
