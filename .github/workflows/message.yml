@@ -1,0 +1,21 @@
+name: Check Commit Message Format
+
+on:
+  push:
+    branches:
+      - main # or your target branch
+
+jobs:
+  check-message-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if commit message follows the format 'v*.*.*'
+        run: |
+          COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
+          if [[ "$COMMIT_MESSAGE" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Commit message format is valid: $COMMIT_MESSAGE"
+            git tag $COMMIT_MESSAGE
+          else
+            echo "Commit message format is invalid: $COMMIT_MESSAGE"
+            exit 1
+          fi
