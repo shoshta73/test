@@ -8,13 +8,21 @@ on:
 jobs:
   check-message-format:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history so that tags can be pushed
+
       - name: Check if commit message follows the format 'v*.*.*'
         run: |
           COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
           if [[ "$COMMIT_MESSAGE" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Commit message format is valid: $COMMIT_MESSAGE"
             git tag $COMMIT_MESSAGE
+            git push --follow-tags
           else
             echo "Commit message format is invalid: $COMMIT_MESSAGE"
             exit 1
