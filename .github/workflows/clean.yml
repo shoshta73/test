@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [closed]  # This triggers the workflow when a PR is closed (merged or not)
 
+permissions:
+  contents: write 
+
 jobs:
   cleanup:
     if: github.event.pull_request.merged == true  # Only run if the PR was merged
