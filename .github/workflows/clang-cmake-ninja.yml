@@ -1,0 +1,21 @@
+name: clang-cmake-ninja
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clang
+        run: |
+          clang --version
+          which clang
+      - name: cmake
+        run: |
+          cmake --version
+          which cmake
+      - name: ninja
+        run: |
+          ninja --version
+          which ninja
