@@ -7,6 +7,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: pwd
+        run: |
+          pwd
       - name: clang
         run: |
           clang --version
